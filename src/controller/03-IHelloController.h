@@ -13,6 +13,5 @@ public:
     virtual HelloResponseDto hello(HelloRequestDto request) = 0;
 };
 
-#include "04-HelloController.h"
 #endif
 

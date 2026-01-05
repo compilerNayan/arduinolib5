@@ -43,21 +43,6 @@ public:
         
         return response;
     }
-
-    public: static IHelloControllerPtr GetInstance() {
-        static IHelloControllerPtr instance(new HelloController());
-        return instance;
-    }
-};
-
-template <>
-struct Implementation<IHelloController> {
-    using type = HelloController;
-};
-
-template <>
-struct Implementation<IHelloController*> {
-    using type = HelloController*;
 };
 
 #endif
