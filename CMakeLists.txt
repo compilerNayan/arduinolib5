@@ -25,6 +25,12 @@ set_target_properties(arduino-core PROPERTIES
     VERSION ${PROJECT_VERSION}
 )
 
+# Set include directories for arduino-core's own headers
+target_include_directories(arduino-core INTERFACE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
+    $<INSTALL_INTERFACE:include>
+)
+
 # Link to arduinolib4
 # Try the namespaced target first, fallback to non-namespaced
 if(TARGET arduinolib4::arduinolib4)
