@@ -2,13 +2,14 @@
 #define WIFISERVICE_H
 
 #include <StandardDefines.h>
+#include "IWifiService.h"
 #include "../repository/WifiCredentialsRepository.h"
 #include "../repository/WifiConnectionRepository.h"
 #include "../entity/WifiCredentials.h"
 #include "../entity/WifiConnection.h"
 
-/// @Service
-class WifiService {
+/// @Component
+class WifiService : public IWifiService {
     Public Virtual ~WifiService() = default;
 
     /// @Autowired
@@ -18,7 +19,7 @@ class WifiService {
     WifiConnectionRepositoryPtr wifiConnectionRepository;
 
     // Add WiFi credentials
-    Public Virtual WifiCredentials AddWifiCredentials(const WifiCredentials& credentials) {
+    Public Virtual WifiCredentials AddWifiCredentials(const WifiCredentials& credentials) override {
         // Save credentials
         WifiCredentials creds = credentials;
         WifiCredentials saved = wifiCredentialsRepository->Save(creds);
@@ -32,7 +33,7 @@ class WifiService {
     }
 
     // Update WiFi credentials
-    Public Virtual WifiCredentials UpdateWifiCredentials(const WifiCredentials& credentials) {
+    Public Virtual WifiCredentials UpdateWifiCredentials(const WifiCredentials& credentials) override {
         // Update credentials
         WifiCredentials creds = credentials;
         WifiCredentials updated = wifiCredentialsRepository->Update(creds);
@@ -46,7 +47,7 @@ class WifiService {
     }
 
     // Delete WiFi credentials by SSID
-    Public Virtual Void DeleteWifiCredentials(const StdString& ssid) {
+    Public Virtual Void DeleteWifiCredentials(const StdString& ssid) override {
         // Check if this SSID is the last connected one
         vector<WifiConnection> connections = wifiConnectionRepository->FindAll();
         if (!connections.empty()) {
@@ -64,17 +65,17 @@ class WifiService {
     }
 
     // Read WiFi credentials by SSID
-    Public Virtual optional<WifiCredentials> GetWifiCredentials(const StdString& ssid) {
+    Public Virtual optional<WifiCredentials> GetWifiCredentials(const StdString& ssid) override {
         return wifiCredentialsRepository->FindById(ssid);
     }
 
     // Get all WiFi credentials
-    Public Virtual vector<WifiCredentials> GetAllWifiCredentials() {
+    Public Virtual vector<WifiCredentials> GetAllWifiCredentials() override {
         return wifiCredentialsRepository->FindAll();
     }
 
     // Get last connected WiFi details
-    Public Virtual optional<WifiCredentials> GetLastConnectedWifi() {
+    Public Virtual optional<WifiCredentials> GetLastConnectedWifi() override {
         // Get all connection records (should only be one, but we'll check all)
         vector<WifiConnection> connections = wifiConnectionRepository->FindAll();
         
