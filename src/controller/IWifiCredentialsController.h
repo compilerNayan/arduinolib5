@@ -12,7 +12,7 @@ class IWifiCredentialsController {
     Public Virtual WifiCredentials CreateWifiCredentials(WifiCredentials credentials) = 0;
 
     // Read - Get WiFi credentials by SSID
-    Public Virtual optional<WifiCredentials> GetWifiCredentials(const StdString& ssid) = 0;
+    Public Virtual WifiCredentials GetWifiCredentials(const StdString& ssid) = 0;
 
     // Read All - Get all WiFi credentials
     Public Virtual vector<WifiCredentials> GetAllWifiCredentials() = 0;

@@ -65,8 +65,13 @@ class WifiService : public IWifiService {
     }
 
     // Read WiFi credentials by SSID
-    Public Virtual optional<WifiCredentials> GetWifiCredentials(const StdString& ssid) override {
-        return wifiCredentialsRepository->FindById(ssid);
+    Public Virtual WifiCredentials GetWifiCredentials(const StdString& ssid) override {
+        optional<WifiCredentials> result = wifiCredentialsRepository->FindById(ssid);
+        if (result.has_value()) {
+            return result.value();
+        }
+        // Return empty WifiCredentials if not found
+        return WifiCredentials();
     }
 
     // Get all WiFi credentials

@@ -22,7 +22,7 @@ class WifiCredentialsController : public IWifiCredentialsController {
 
         // Read - Get WiFi credentials by SSID
         /// @GetMapping("/{ssid}")
-        Public Virtual optional<WifiCredentials> GetWifiCredentials(const StdString& ssid) override {
+        Public Virtual WifiCredentials GetWifiCredentials(const StdString& ssid) override {
             return wifiService->GetWifiCredentials(ssid);
         }
 

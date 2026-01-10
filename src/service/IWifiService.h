@@ -18,7 +18,7 @@ class IWifiService {
     Public Virtual Void DeleteWifiCredentials(const StdString& ssid) = 0;
 
     // Read WiFi credentials by SSID
-    Public Virtual optional<WifiCredentials> GetWifiCredentials(const StdString& ssid) = 0;
+    Public Virtual WifiCredentials GetWifiCredentials(const StdString& ssid) = 0;
 
     // Get all WiFi credentials
     Public Virtual vector<WifiCredentials> GetAllWifiCredentials() = 0;
