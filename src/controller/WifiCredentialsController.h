@@ -10,7 +10,7 @@
 /// @RequestMapping("/wifi-credentials")
 /// @Component
 class WifiCredentialsController : public IWifiCredentialsController {
-    Public:
+    Public
         /// @Autowired
         IWifiServicePtr wifiService;
 
