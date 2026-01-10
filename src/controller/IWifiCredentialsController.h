@@ -3,6 +3,8 @@
 
 #include <StandardDefines.h>
 #include "../entity/WifiCredentials.h"
+#include "GetWifiCredentialsRequestDto.h"
+#include "DeleteWifiCredentialsRequestDto.h"
 
 DefineStandardPointers(IWifiCredentialsController)
 class IWifiCredentialsController {
@@ -12,7 +14,7 @@ class IWifiCredentialsController {
     Public Virtual WifiCredentials CreateWifiCredentials(WifiCredentials credentials) = 0;
 
     // Read - Get WiFi credentials by SSID
-    Public Virtual WifiCredentials GetWifiCredentials(const StdString& ssid) = 0;
+    Public Virtual WifiCredentials GetWifiCredentials(GetWifiCredentialsRequestDto request) = 0;
 
     // Read All - Get all WiFi credentials
     Public Virtual vector<WifiCredentials> GetAllWifiCredentials() = 0;
@@ -21,7 +23,7 @@ class IWifiCredentialsController {
     Public Virtual WifiCredentials UpdateWifiCredentials(WifiCredentials credentials) = 0;
 
     // Delete - Delete WiFi credentials by SSID
-    Public Virtual Void DeleteWifiCredentials(const StdString& ssid) = 0;
+    Public Virtual Void DeleteWifiCredentials(DeleteWifiCredentialsRequestDto request) = 0;
 
     // Get last connected WiFi
     Public Virtual optional<WifiCredentials> GetLastConnectedWifi() = 0;

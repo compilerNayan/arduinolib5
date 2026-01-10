@@ -22,8 +22,11 @@ class WifiCredentialsController : public IWifiCredentialsController {
 
         // Read - Get WiFi credentials by SSID
         /// @GetMapping("/{ssid}")
-        Public Virtual WifiCredentials GetWifiCredentials(const StdString& ssid) override {
-            return wifiService->GetWifiCredentials(ssid);
+        Public Virtual WifiCredentials GetWifiCredentials(GetWifiCredentialsRequestDto request) override {
+            if (!request.ssid.has_value() || request.ssid.value().empty()) {
+                return WifiCredentials();
+            }
+            return wifiService->GetWifiCredentials(request.ssid.value());
         }
 
         // Read All - Get all WiFi credentials
@@ -40,8 +43,10 @@ class WifiCredentialsController : public IWifiCredentialsController {
 
         // Delete - Delete WiFi credentials by SSID
         /// @DeleteMapping("/{ssid}")
-        Public Virtual Void DeleteWifiCredentials(const StdString& ssid) override {
-            wifiService->DeleteWifiCredentials(ssid);
+        Public Virtual Void DeleteWifiCredentials(DeleteWifiCredentialsRequestDto request) override {
+            if (request.ssid.has_value() && !request.ssid.value().empty()) {
+                wifiService->DeleteWifiCredentials(request.ssid.value());
+            }
         }
 
         // Get last connected WiFi
