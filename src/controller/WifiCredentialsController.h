@@ -6,9 +6,9 @@
 #include "../service/IWifiService.h"
 #include "../entity/WifiCredentials.h"
 
-/// @RestController
-/// @RequestMapping("/wifi-credentials")
-/// @Component
+/* @RestController */
+/* @RequestMapping("/wifi-credentials") */
+/* @Component */
 class WifiCredentialsController : public IWifiCredentialsController {
     Public
         /// @Autowired
