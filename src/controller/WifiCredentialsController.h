@@ -21,7 +21,7 @@ class WifiCredentialsController : public IWifiCredentialsController {
         }
 
         // Read - Get WiFi credentials by SSID
-        /// @GetMapping("/{ssid}")
+        /// @GetMapping("")
         Public Virtual WifiCredentials GetWifiCredentials(GetWifiCredentialsRequestDto request) override {
             if (!request.ssid.has_value() || request.ssid.value().empty()) {
                 return WifiCredentials();
@@ -42,7 +42,7 @@ class WifiCredentialsController : public IWifiCredentialsController {
         }
 
         // Delete - Delete WiFi credentials by SSID
-        /// @DeleteMapping("/{ssid}")
+        /// @DeleteMapping("")
         Public Virtual Void DeleteWifiCredentials(DeleteWifiCredentialsRequestDto request) override {
             if (request.ssid.has_value() && !request.ssid.value().empty()) {
                 wifiService->DeleteWifiCredentials(request.ssid.value());
