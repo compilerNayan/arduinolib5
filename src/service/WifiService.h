@@ -49,7 +49,7 @@ class WifiService : public IWifiService {
     // Delete WiFi credentials by SSID
     Public Virtual Void DeleteWifiCredentials(const StdString& ssid) override {
         // Check if this SSID is the last connected one
-        vector<WifiConnection> connections = wifiConnectionRepository->FindAll();
+        Vector<WifiConnection> connections = wifiConnectionRepository->FindAll();
         if (!connections.empty()) {
             WifiConnection connection = connections[0];
             if (connection.lastConnectedSsid.has_value() && 
@@ -75,14 +75,14 @@ class WifiService : public IWifiService {
     }
 
     // Get all WiFi credentials
-    Public Virtual vector<WifiCredentials> GetAllWifiCredentials() override {
+    Public Virtual Vector<WifiCredentials> GetAllWifiCredentials() override {
         return wifiCredentialsRepository->FindAll();
     }
 
     // Get last connected WiFi details
     Public Virtual optional<WifiCredentials> GetLastConnectedWifi() override {
         // Get all connection records (should only be one, but we'll check all)
-        vector<WifiConnection> connections = wifiConnectionRepository->FindAll();
+        Vector<WifiConnection> connections = wifiConnectionRepository->FindAll();
         
         if (connections.empty()) {
             return std::nullopt;
@@ -110,7 +110,7 @@ class WifiService : public IWifiService {
     // Update last connected SSID (internal helper method)
     Private Void UpdateLastConnectedSsid(const StdString& ssid) {
         // Get all connection records
-        vector<WifiConnection> connections = wifiConnectionRepository->FindAll();
+        Vector<WifiConnection> connections = wifiConnectionRepository->FindAll();
         
         WifiConnection connection;
         

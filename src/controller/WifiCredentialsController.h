@@ -31,7 +31,7 @@ class WifiCredentialsController : public IWifiCredentialsController {
 
         // Read All - Get all WiFi credentials
         /// @GetMapping("")
-        Public Virtual vector<WifiCredentials> GetAllWifiCredentials() override {
+        Public Virtual Vector<WifiCredentials> GetAllWifiCredentials() override {
             return wifiService->GetAllWifiCredentials();
         }
 

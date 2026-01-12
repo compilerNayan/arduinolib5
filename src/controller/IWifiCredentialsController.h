@@ -17,7 +17,7 @@ class IWifiCredentialsController {
     Public Virtual WifiCredentials GetWifiCredentials(GetWifiCredentialsRequestDto request) = 0;
 
     // Read All - Get all WiFi credentials
-    Public Virtual vector<WifiCredentials> GetAllWifiCredentials() = 0;
+    Public Virtual Vector<WifiCredentials> GetAllWifiCredentials() = 0;
 
     // Update - Update existing WiFi credentials
     Public Virtual WifiCredentials UpdateWifiCredentials(WifiCredentials credentials) = 0;
