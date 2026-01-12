@@ -3,7 +3,7 @@
 
 #include <StandardDefines.h>
 
-/* @Entity */
+/// @Entity
 class GetWifiCredentialsRequestDto {
     Public optional<StdString> ssid;
 };
