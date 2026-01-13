@@ -16,13 +16,13 @@ class WifiCredentialsController : public IWifiCredentialsController {
 
         // Create - Add new WiFi credentials
         /// @PostMapping("")
-        Public Virtual WifiCredentials CreateWifiCredentials(WifiCredentials credentials) override {
+        Public Virtual WifiCredentials CreateWifiCredentials(/* @RequestBody */ WifiCredentials credentials) override {
             return wifiService->AddWifiCredentials(credentials);
         }
 
         // Read - Get WiFi credentials by SSID
         /// @GetMapping("")
-        Public Virtual WifiCredentials GetWifiCredentials(GetWifiCredentialsRequestDto request) override {
+        Public Virtual WifiCredentials GetWifiCredentials(/* @RequestBody */ GetWifiCredentialsRequestDto request) override {
             if (!request.ssid.has_value() || request.ssid.value().empty()) {
                 return WifiCredentials();
             }
@@ -37,13 +37,13 @@ class WifiCredentialsController : public IWifiCredentialsController {
 
         // Update - Update existing WiFi credentials
         /// @PutMapping("")
-        Public Virtual WifiCredentials UpdateWifiCredentials(WifiCredentials credentials) override {
+        Public Virtual WifiCredentials UpdateWifiCredentials(/* @RequestBody */ WifiCredentials credentials) override {
             return wifiService->UpdateWifiCredentials(credentials);
         }
 
         // Delete - Delete WiFi credentials by SSID
         /// @DeleteMapping("")
-        Public Virtual Void DeleteWifiCredentials(DeleteWifiCredentialsRequestDto request) override {
+        Public Virtual Void DeleteWifiCredentials(/* @RequestBody */ DeleteWifiCredentialsRequestDto request) override {
             if (request.ssid.has_value() && !request.ssid.value().empty()) {
                 wifiService->DeleteWifiCredentials(request.ssid.value());
             }

@@ -11,7 +11,7 @@ class HelloController final : public IHelloController {
 public:
 
     /// @PostMapping("/greet")
-    HelloResponseDto hello(HelloRequestDto /* request */) override {
+    HelloResponseDto hello(/* @RequestBody */ HelloRequestDto /* request */) override {
         HelloResponseDto response;
         
         // Generate two random strings
