@@ -5,7 +5,7 @@
 #include "CpaRepository.h"
 #include "../entity/WifiCredentials.h"
 
-/// @Repository
+/* @Repository */
 DefineStandardPointers(WifiCredentialsRepository)
 class WifiCredentialsRepository : public CpaRepository<WifiCredentials, StdString> {
     Public Virtual ~WifiCredentialsRepository() = default;
