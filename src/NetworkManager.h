@@ -4,7 +4,7 @@
 
 #include <StandardDefines.h>
 #include "INetworkManager.h"
-#include "IWifiService.h"
+#include "service/IWifiService.h"
 #include "../entity/WifiCredentials.h"
 #include <WiFi.h>
 #include <Arduino.h>
