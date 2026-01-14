@@ -13,7 +13,7 @@
 #define std_print(x) Serial.print(x)
 #define std_println(x) Serial.println(x)
 
-/// @Component
+/* @Component */
 class NetworkManager : public INetworkManager {
     Public Virtual ~NetworkManager() = default;
 

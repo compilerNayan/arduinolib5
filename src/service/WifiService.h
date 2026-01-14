@@ -8,7 +8,7 @@
 #include "../entity/WifiCredentials.h"
 #include "../entity/WifiConnection.h"
 
-/// @Component
+/* @Component */
 class WifiService : public IWifiService {
     Public Virtual ~WifiService() = default;
 

@@ -18,7 +18,7 @@
 #define std_println(x) std::cout << x << std::endl
 #endif
 
-/// @Component
+/* @Component */
 class SpringBootApp : public ISpringBootApp {
     Public Virtual ~SpringBootApp() = default;
 

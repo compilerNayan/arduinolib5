@@ -8,7 +8,7 @@
 
 /// @RestController
 /// @RequestMapping("/wifi-credentials")
-/// @Component
+/* @Component */
 class WifiCredentialsController : public IWifiCredentialsController {
     Public
         /* @Autowired */

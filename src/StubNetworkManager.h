@@ -5,7 +5,7 @@
 #include <StandardDefines.h>
 #include "INetworkManager.h"
 
-/// @Component
+/* @Component */
 class StubNetworkManager : public INetworkManager {
     Public Virtual ~StubNetworkManager() = default;
 
