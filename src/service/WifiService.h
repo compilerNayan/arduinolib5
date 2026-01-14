@@ -12,10 +12,10 @@
 class WifiService : public IWifiService {
     Public Virtual ~WifiService() = default;
 
-    /// @Autowired
+    /* @Autowired */
     WifiCredentialsRepositoryPtr wifiCredentialsRepository;
 
-    /// @Autowired
+    /* @Autowired */
     WifiConnectionRepositoryPtr wifiConnectionRepository;
 
     // Add WiFi credentials

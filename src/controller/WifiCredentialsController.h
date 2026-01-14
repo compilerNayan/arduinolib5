@@ -11,7 +11,7 @@
 /// @Component
 class WifiCredentialsController : public IWifiCredentialsController {
     Public
-        /// @Autowired
+        /* @Autowired */
         IWifiServicePtr wifiService;
 
         // Create - Add new WiFi credentials

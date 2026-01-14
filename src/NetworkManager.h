@@ -17,7 +17,7 @@
 class NetworkManager : public INetworkManager {
     Public Virtual ~NetworkManager() = default;
 
-    /// @Autowired
+    /* @Autowired */
     IWifiServicePtr wifiService;
 
     // Track current mode: "wifi" or "hotspot"

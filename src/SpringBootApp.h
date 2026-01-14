@@ -22,10 +22,10 @@
 class SpringBootApp : public ISpringBootApp {
     Public Virtual ~SpringBootApp() = default;
 
-    /// @Autowired
+    /* @Autowired */
     Private INetworkManagerPtr networkManager;
 
-    /// @Autowired
+    /* @Autowired */
     Private IHttpRequestManagerPtr requestManager;
 
     Public SpringBootApp() {
