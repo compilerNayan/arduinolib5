@@ -78,6 +78,7 @@ class SpringBootApp : public ISpringBootApp {
         
         // Then start the HTTP server
         std_println("[SpringBootApp] Step 2: Starting HTTP server...");
+        std_println("[SpringBootApp] Using default port: 8080");
         Bool serverStarted = requestManager->StartServer();
         
         if (serverStarted) {
@@ -85,6 +86,7 @@ class SpringBootApp : public ISpringBootApp {
             std_println("[SpringBootApp] StartApp() completed successfully");
         } else {
             std_println("[SpringBootApp] ERROR: Failed to start HTTP server");
+            std_println("[SpringBootApp] Check the logs above for detailed error information");
         }
         
         return serverStarted;
