@@ -3,7 +3,7 @@
 
 #include <StandardDefines.h>
 
-/// @Serializable
+/* @Serializable */
 class HelloResponseDto {
 public:
     optional<StdString> randomString1;

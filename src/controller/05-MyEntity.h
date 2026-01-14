@@ -3,10 +3,10 @@
 
 #include <StandardDefines.h>
 
-/// @Entity
+/* @Entity */
 class MyEntity {
 public:
-    /// @Id
+    /* @Id */
     optional<int> id;
     optional<StdString> username;
     optional<StdString> password;

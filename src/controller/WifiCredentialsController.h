@@ -6,8 +6,8 @@
 #include "../service/IWifiService.h"
 #include "../entity/WifiCredentials.h"
 
-/// @RestController
-/// @RequestMapping("/wifi-credentials")
+/* @RestController */
+/* @RequestMapping("/wifi-credentials") */
 /* @Component */
 class WifiCredentialsController : public IWifiCredentialsController {
     Public
@@ -15,13 +15,13 @@ class WifiCredentialsController : public IWifiCredentialsController {
         IWifiServicePtr wifiService;
 
         // Create - Add new WiFi credentials
-        /// @PostMapping("")
+        /* @PostMapping("") */
         Public Virtual WifiCredentials CreateWifiCredentials(/* @RequestBody */ WifiCredentials credentials) override {
             return wifiService->AddWifiCredentials(credentials);
         }
 
         // Read - Get WiFi credentials by SSID
-        /// @GetMapping("/{ssid}")
+        /* @GetMapping("/{ssid}") */
         Public Virtual WifiCredentials GetWifiCredentials(/* @PathVariable("ssid") */ StdString ssid) override {
             if (ssid.empty()) {
                 return WifiCredentials();
@@ -30,19 +30,19 @@ class WifiCredentialsController : public IWifiCredentialsController {
         }
 
         // Read All - Get all WiFi credentials
-        /// @GetMapping("")
+        /* @GetMapping("") */
         Public Virtual Vector<WifiCredentials> GetAllWifiCredentials() override {
             return wifiService->GetAllWifiCredentials();
         }
 
         // Update - Update existing WiFi credentials
-        /// @PutMapping("")
+        /* @PutMapping("") */
         Public Virtual WifiCredentials UpdateWifiCredentials(/* @RequestBody */ WifiCredentials credentials) override {
             return wifiService->UpdateWifiCredentials(credentials);
         }
 
         // Delete - Delete WiFi credentials by SSID
-        /// @DeleteMapping("/{ssid}")
+        /* @DeleteMapping("/{ssid}") */
         Public Virtual Void DeleteWifiCredentials(/* @PathVariable("ssid") */ StdString ssid) override {
             if (!ssid.empty()) {
                 wifiService->DeleteWifiCredentials(ssid);
@@ -50,7 +50,7 @@ class WifiCredentialsController : public IWifiCredentialsController {
         }
 
         // Get last connected WiFi
-        /// @GetMapping("/last-connected")
+        /* @GetMapping("/last-connected") */
         Public Virtual optional<WifiCredentials> GetLastConnectedWifi() override {
             return wifiService->GetLastConnectedWifi();
         }

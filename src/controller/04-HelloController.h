@@ -4,13 +4,13 @@
 #include "03-IHelloController.h"
 #include <random>
 
-/// @RestController
-/// @RequestMapping("/hello")
+/* @RestController */
+/* @RequestMapping("/hello") */
 /* @Component */
 class HelloController final : public IHelloController {
 public:
 
-    /// @PostMapping("/greet")
+    /* @PostMapping("/greet") */
     HelloResponseDto hello(/* @RequestBody */ HelloRequestDto /* request */) override {
         HelloResponseDto response;
         

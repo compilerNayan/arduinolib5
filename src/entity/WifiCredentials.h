@@ -3,11 +3,11 @@
 
 #include <StandardDefines.h>
 
-/// @Entity
+/* @Entity */
 class WifiCredentials {
 
-    /// @Id
-    /// @NotNull
+    /* @Id */
+    /* @NotNull */
     Public optional<StdString> ssid;
 
     Public optional<StdString> password;

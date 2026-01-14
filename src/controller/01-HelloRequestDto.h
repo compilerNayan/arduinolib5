@@ -3,7 +3,7 @@
 
 #include <StandardDefines.h>
 
-/// @Serializable
+/* @Serializable */
 class HelloRequestDto {
 public:
     optional<int> number;
