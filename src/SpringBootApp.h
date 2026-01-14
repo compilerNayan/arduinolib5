@@ -31,8 +31,8 @@ class SpringBootApp : public ISpringBootApp {
     Public SpringBootApp() {
         std_println("[SpringBootApp] Constructor called");
 #ifdef ARDUINO
-        Serial.begin(115200);
-        delay(1000);
+       // Serial.begin(115200);
+        //delay(1000);
         std_println("[SpringBootApp] Serial initialized at 115200 baud");
 #endif
         
