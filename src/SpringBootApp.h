@@ -16,6 +16,13 @@ class SpringBootApp : public ISpringBootApp {
     /// @Autowired
     Private IHttpRequestManagerPtr requestManager;
 
+    Public SpringBootApp() {
+#ifdef ARDUINO
+        Serial.begin(115200);
+        delay(1000);
+#endif
+    }
+
     Public Virtual Bool StartApp() override {
         // Connect to network first
         networkManager->ConnectNetwork();
