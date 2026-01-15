@@ -6,7 +6,6 @@
 
 /* @RestController */
 /* @RequestMapping("/hello") */
-/* @Component */
 class HelloController final : public IHelloController {
 public:
 
