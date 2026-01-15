@@ -2,7 +2,7 @@
 #define ARDUINOAPP_H
 
 #include <StandardDefines.h>
-#include "IArduinoApp.h"
+#include "IArduinoSpringBootApp.h"
 #include "INetworkManager.h"
 #include "ISpringBootCppApp.h"
 
@@ -14,8 +14,8 @@
 #endif
 
 /* @Component */
-class ArduinoApp : public IArduinoApp {
-    Public Virtual ~ArduinoApp() = default;
+class ArduinoSpringBootApp : public IArduinoSpringBootApp {
+    Public Virtual ~ArduinoSpringBootApp() = default;
 
     /* @Autowired */
     Private INetworkManagerPtr networkManager;

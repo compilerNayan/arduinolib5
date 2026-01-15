@@ -3,9 +3,9 @@
 
 #include <StandardDefines.h>
 
-DefineStandardPointers(IArduinoApp)
-class IArduinoApp {
-    Public Virtual ~IArduinoApp() = default;
+DefineStandardPointers(IArduinoSpringBootApp)
+class IArduinoSpringBootApp {
+    Public Virtual ~IArduinoSpringBootApp() = default;
 
     /**
      * @brief Starts the Arduino application
