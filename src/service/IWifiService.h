@@ -25,6 +25,9 @@ class IWifiService {
 
     // Get last connected WiFi details
     Public Virtual optional<WifiCredentials> GetLastConnectedWifi() = 0;
+
+    // Update last connected SSID
+    Public Virtual Void UpdateLastConnectedSsid(const StdString& ssid) = 0;
 };
 
 #endif // IWIFISERVICE_H

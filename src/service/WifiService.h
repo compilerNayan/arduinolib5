@@ -97,8 +97,8 @@ class WifiService : public IWifiService {
         return credentials;
     }
 
-    // Update last connected SSID (internal helper method)
-    Private Void UpdateLastConnectedSsid(const StdString& ssid) {
+    // Update last connected SSID
+    Public Virtual Void UpdateLastConnectedSsid(const StdString& ssid) override {
         // Get all connection records
         Vector<WifiConnection> connections = wifiConnectionRepository->FindAll();
         
