@@ -23,17 +23,57 @@ class NetworkManager : public INetworkManager {
     // Track current mode: "wifi" or "hotspot"
     Private StdString currentMode;
 
+    // Helper method to attempt WiFi connection
+    Private Bool TryConnectToWifi(const StdString& ssid, const StdString& password) {
+        std_print("[NetworkManager] Attempting to connect to WiFi - SSID: ");
+        std_println(ssid.c_str());
+        if (!password.empty()) {
+            std_println("[NetworkManager] Using password");
+        } else {
+            std_println("[NetworkManager] No password (open network)");
+        }
+        
+        // Disconnect any existing connection first
+        WiFi.disconnect();
+        delay(100);
+        WiFi.mode(WIFI_STA);
+        
+        // Connect to WiFi
+        WiFi.begin(ssid.c_str(), password.empty() ? nullptr : password.c_str());
+        currentMode = "wifi";
+        
+        // Wait for connection
+        int attempts = 0;
+        while (WiFi.status() != WL_CONNECTED && attempts < 20) {
+            delay(500);
+            attempts++;
+        }
+        
+        if (WiFi.status() == WL_CONNECTED) {
+            std_print("[NetworkManager] WiFi connected successfully! IP Address: ");
+            std_println(WiFi.localIP().toString().c_str());
+            return true;
+        } else {
+            std_print("[NetworkManager] WiFi connection failed or timeout for SSID: ");
+            std_println(ssid.c_str());
+            return false;
+        }
+    }
+
     // Connect to network (WiFi or start hotspot)
     Public Virtual Void ConnectNetwork() override {
         std_println("[NetworkManager] ConnectNetwork() called");
         
-        // Check if there's a last connected WiFi
+        Bool connected = false;
+        
+        // Step 1: Check if there's a last connected WiFi
+        std_println("[NetworkManager] Step 1: Checking for last connected WiFi...");
         optional<WifiCredentials> lastWifi = wifiService->GetLastConnectedWifi();
         
         if (lastWifi.has_value() && 
             lastWifi.value().ssid.has_value() && 
             !lastWifi.value().ssid.value().empty()) {
-            // Connect to last connected WiFi
+            // Try connecting to last connected WiFi
             StdString ssid = lastWifi.value().ssid.value();
             StdString password = "";
             
@@ -41,53 +81,88 @@ class NetworkManager : public INetworkManager {
                 password = lastWifi.value().password.value();
             }
             
-            std_print("[NetworkManager] Connecting to WiFi - SSID: ");
+            std_print("[NetworkManager] Last connected WiFi found - SSID: ");
             std_println(ssid.c_str());
-            if (!password.empty()) {
-                std_println("[NetworkManager] Using password");
-            } else {
-                std_println("[NetworkManager] No password (open network)");
-            }
             
-            // Disconnect any existing connection first
-            WiFi.disconnect();
-            WiFi.mode(WIFI_STA);
+            connected = TryConnectToWifi(ssid, password);
             
-            // Connect to WiFi
-            WiFi.begin(ssid.c_str(), password.empty() ? nullptr : password.c_str());
-            currentMode = "wifi";
-            
-            // Wait for connection and log IP when connected
-            int attempts = 0;
-            while (WiFi.status() != WL_CONNECTED && attempts < 20) {
-                delay(500);
-                attempts++;
-            }
-            
-            if (WiFi.status() == WL_CONNECTED) {
-                std_print("[NetworkManager] WiFi connected! IP Address: ");
+            if (connected) {
+                // Update last connected SSID (in case it changed)
                 wifiService->UpdateLastConnectedSsid(ssid);
-                std_println(WiFi.localIP().toString().c_str());
+                std_println("[NetworkManager] Successfully connected to last connected WiFi");
+                return;
             } else {
-                std_println("[NetworkManager] WiFi connection failed or timeout");
+                std_println("[NetworkManager] Failed to connect to last connected WiFi, trying other credentials...");
             }
         } else {
-            // No last connected WiFi, start hotspot
-            std_println("[NetworkManager] No last connected WiFi found, starting hotspot");
-            std_println("[NetworkManager] Hotspot SSID: Mishulika (open, no password)");
+            std_println("[NetworkManager] No last connected WiFi found");
+        }
+        
+        // Step 2: If last WiFi not present or connection failed, try all WiFi credentials
+        std_println("[NetworkManager] Step 2: Getting all WiFi credentials from database...");
+        Vector<WifiCredentials> allCredentials = wifiService->GetAllWifiCredentials();
+        
+        if (!allCredentials.empty()) {
+            std_print("[NetworkManager] Found ");
+            std_print(std::to_string(allCredentials.size()).c_str());
+            std_println(" WiFi credential(s) in database");
             
-            WiFi.disconnect();
-            WiFi.mode(WIFI_AP);
-            
-            // Start hotspot with SSID "Mishulika" and no password (open)
-            Bool apStarted = WiFi.softAP("Mishulika", nullptr);
-            if (apStarted) {
-                currentMode = "hotspot";
-                std_print("[NetworkManager] Hotspot started! AP IP Address: ");
-                std_println(WiFi.softAPIP().toString().c_str());
-            } else {
-                std_println("[NetworkManager] Failed to start hotspot");
+            // Try connecting to each credential one by one
+            for (size_t i = 0; i < allCredentials.size(); i++) {
+                const WifiCredentials& cred = allCredentials[i];
+                
+                if (!cred.ssid.has_value() || cred.ssid.value().empty()) {
+                    std_println("[NetworkManager] Skipping credential with empty SSID");
+                    continue;
+                }
+                
+                StdString ssid = cred.ssid.value();
+                StdString password = "";
+                
+                if (cred.password.has_value()) {
+                    password = cred.password.value();
+                }
+                
+                std_print("[NetworkManager] Trying credential ");
+                std_print(std::to_string(i + 1).c_str());
+                std_print(" of ");
+                std_print(std::to_string(allCredentials.size()).c_str());
+                std_print(" - SSID: ");
+                std_println(ssid.c_str());
+                
+                connected = TryConnectToWifi(ssid, password);
+                
+                if (connected) {
+                    // Update last connected SSID with the successful one
+                    wifiService->UpdateLastConnectedSsid(ssid);
+                    std_print("[NetworkManager] Successfully connected to WiFi: ");
+                    std_println(ssid.c_str());
+                    std_println("[NetworkManager] Updated last connected WiFi");
+                    return;
+                }
             }
+            
+            std_println("[NetworkManager] All WiFi credentials failed to connect");
+        } else {
+            std_println("[NetworkManager] No WiFi credentials found in database");
+        }
+        
+        // Step 3: If no entries or all connections failed, start hotspot
+        std_println("[NetworkManager] Step 3: Starting hotspot (no WiFi connections available or all failed)");
+        std_println("[NetworkManager] Hotspot SSID: Mishulika (open, no password)");
+        
+        WiFi.disconnect();
+        delay(100);
+        WiFi.mode(WIFI_AP);
+        
+        // Start hotspot with SSID "Mishulika" and no password (open)
+        Bool apStarted = WiFi.softAP("Mishulika", nullptr);
+        if (apStarted) {
+            currentMode = "hotspot";
+            std_print("[NetworkManager] Hotspot started successfully! AP IP Address: ");
+            std_println(WiFi.softAPIP().toString().c_str());
+        } else {
+            std_println("[NetworkManager] Failed to start hotspot");
         }
     }
 
