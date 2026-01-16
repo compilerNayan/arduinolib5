@@ -24,11 +24,6 @@ class WifiService : public IWifiService {
         WifiCredentials creds = credentials;
         WifiCredentials saved = wifiCredentialsRepository->Save(creds);
         
-        // Update last connected SSID if SSID is present
-        if (saved.ssid.has_value()) {
-            UpdateLastConnectedSsid(saved.ssid.value());
-        }
-        
         return saved;
     }
 
@@ -37,11 +32,6 @@ class WifiService : public IWifiService {
         // Update credentials
         WifiCredentials creds = credentials;
         WifiCredentials updated = wifiCredentialsRepository->Update(creds);
-        
-        // Update last connected SSID if SSID is present
-        if (updated.ssid.has_value()) {
-            UpdateLastConnectedSsid(updated.ssid.value());
-        }
         
         return updated;
     }

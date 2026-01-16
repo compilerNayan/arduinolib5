@@ -66,6 +66,7 @@ class NetworkManager : public INetworkManager {
             
             if (WiFi.status() == WL_CONNECTED) {
                 std_print("[NetworkManager] WiFi connected! IP Address: ");
+                wifiService->UpdateLastConnectedSsid(ssid);
                 std_println(WiFi.localIP().toString().c_str());
             } else {
                 std_println("[NetworkManager] WiFi connection failed or timeout");
