@@ -7,6 +7,7 @@
 #include "../repository/WifiConnectionRepository.h"
 #include "../entity/WifiCredentials.h"
 #include "../entity/WifiConnection.h"
+#include "../IArduinoSpringBootApp.h"
 
 /* @Service */
 class WifiService : public IWifiService {
@@ -18,11 +19,32 @@ class WifiService : public IWifiService {
     /* @Autowired */
     WifiConnectionRepositoryPtr wifiConnectionRepository;
 
+    /* @Autowired */
+    IArduinoSpringBootAppPtr arduinoSpringBootApp;
+
+    // Helper method to check last connected WiFi and restart app if invalid
+    Private Void CheckAndRestartIfNeeded() {
+        optional<WifiCredentials> lastWifi = GetLastConnectedWifi();
+        
+        // Check if last connected WiFi is not present or SSID is null/empty
+        if (!lastWifi.has_value() || 
+            !lastWifi.value().ssid.has_value() || 
+            lastWifi.value().ssid.value().empty()) {
+            // Last connected WiFi is invalid, restart the app
+            if (arduinoSpringBootApp != nullptr) {
+                arduinoSpringBootApp->RestartApp();
+            }
+        }
+    }
+
     // Add WiFi credentials
     Public Virtual WifiCredentials AddWifiCredentials(const WifiCredentials& credentials) override {
         // Save credentials
         WifiCredentials creds = credentials;
         WifiCredentials saved = wifiCredentialsRepository->Save(creds);
+        
+        // Check if last connected WiFi is still valid and restart if needed
+        CheckAndRestartIfNeeded();
         
         return saved;
     }
@@ -32,6 +54,9 @@ class WifiService : public IWifiService {
         // Update credentials
         WifiCredentials creds = credentials;
         WifiCredentials updated = wifiCredentialsRepository->Update(creds);
+        
+        // Check if last connected WiFi is still valid and restart if needed
+        CheckAndRestartIfNeeded();
         
         return updated;
     }
@@ -52,6 +77,9 @@ class WifiService : public IWifiService {
         
         // Delete the credentials
         wifiCredentialsRepository->DeleteById(ssid);
+        
+        // Check if last connected WiFi is still valid and restart if needed
+        CheckAndRestartIfNeeded();
     }
 
     // Read WiFi credentials by SSID
