@@ -7,7 +7,7 @@
 #include "../repository/WifiConnectionRepository.h"
 #include "../entity/WifiCredentials.h"
 #include "../entity/WifiConnection.h"
-#include "../IArduinoSpringBootApp.h"
+//#include "../IArduinoSpringBootApp.h"
 
 /* @Service */
 class WifiService : public IWifiService {
@@ -19,8 +19,8 @@ class WifiService : public IWifiService {
     /* @Autowired */
     WifiConnectionRepositoryPtr wifiConnectionRepository;
 
-    /* @Autowired */
-    IArduinoSpringBootAppPtr arduinoSpringBootApp;
+    /* -- @Autowired */
+    //IArduinoSpringBootAppPtr arduinoSpringBootApp;
 
     // Helper method to check last connected WiFi and restart app if invalid
     Private Void CheckAndRestartIfNeeded() {
@@ -31,9 +31,9 @@ class WifiService : public IWifiService {
             !lastWifi.value().ssid.has_value() || 
             lastWifi.value().ssid.value().empty()) {
             // Last connected WiFi is invalid, restart the app
-            if (arduinoSpringBootApp != nullptr) {
+            /*if (arduinoSpringBootApp != nullptr) {
                 arduinoSpringBootApp->RestartApp();
-            }
+            } */
         }
     }
 
